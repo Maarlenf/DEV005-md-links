@@ -27,7 +27,7 @@ const readDirectory = (pathExist) => {
   return allMd;
 };
 
-readDirectory(pathExist);
+// console.log(readDirectory(pathExist));
 /* const allDirectory = fs.readdirSync(allPath);
 console.log(allDirectory); */
 

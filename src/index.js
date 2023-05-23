@@ -1,50 +1,25 @@
-/* const { validatePath, convertToAbsolutePath } = require('./convertPath');
+const { validatePath, convertToAbsolutePath } = require('./convertPath');
 const { readDirectory } = require('./getFiles');
-const { readAllFilesMd, getContent } = require('./readFile');
+const { readAllFilesMd } = require('./readFile');
+const { validateLinksAll } = require('./validateLinks');
 
-// eslint-disable-next-line no-unused-vars
 const pathExist = process.argv[2];
-console.log(validatePath(pathExist));
-// eslint-disable-next-line no-shadow
-/* const mdLinks = (pathExist) => {
-  // eslint-disable-next-line no-new
-  new Promise((resolve, rejects) => {
-    if (validatePath === true) {
-      const namePath = convertToAbsolutePath(pathExist);
-      console.log('La ruta si existe: ', namePath);
-      console.log(readDirectory(namePath));
-      console.log(readAllFilesMd(namePath));
-      console.log(getContent(namePath));
-      resolve(namePath);
-      if (namePath === undefined) {
-        // eslint-disable-next-line prefer-promise-reject-errors
-        rejects('La ruta no existe, o no esta bien escrita. Por favor verificalo de nuevo');
-      }
-    }
-  });
-};
 
-mdLinks(pathExist).then((res) => {
-  console.log(res);
-}).catch((err) => console.log(err));
-module.exports = { mdLinks };
-// función md-links
-// eslint-disable-next-line no-shadow
-/* const mdLinks = (pathExist) => new Promise((resolve, reject) => {
-  if (validatePath(pathExist)) {
-    const transformPath = convertToAbsolutePath(pathExist);
-    // console.log('La ruta existe: ', transformPath);
-    const getMd = getContent(transformPath);
-    const probar = readAllFilesMd(getMd);
-    resolve(probar);
+const mdLinks = (path, options) => new Promise((resolve, reject) => {
+  if (!validatePath(path)) {
+    reject((error) => console.log(error));
   } else {
-    reject(/* console.log('Error, la ruta no existe '));
+    const pathAbsolute = convertToAbsolutePath(path);
+    const getArrayMd = readDirectory(pathAbsolute);
+    readAllFilesMd(getArrayMd)
+      .then((res) => {
+        const prueba = res.flat();
+        resolve(Promise.all(validateLinksAll(prueba)));
+      })
+      .catch((err) => console.log(err));
   }
 });
 
-mdLinks(pathExist)
-  .then((probar) => {
-    console.log(probar);
-  }).catch((error) => { console.log(error); });
+mdLinks(pathExist, {}).then((res) => console.log(res));
 
-module.exports = { mdLinks }; */
+module.exports = { mdLinks };

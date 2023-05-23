@@ -9,10 +9,8 @@ const pathExist = process.argv[2];
 // eslint-disable-next-line no-shadow
 const validatePath = (pathExist) => {
   if (fs.existsSync(pathExist)) {
-    console.log('La ruta si existe', pathExist);
     return true;
   }
-  console.log('Según la validación de existencia, la ruta no existe');
   return false;
 };
 
@@ -20,15 +18,11 @@ const validatePath = (pathExist) => {
 // eslint-disable-next-line no-shadow
 const convertToAbsolutePath = (pathExist) => {
   if (path.isAbsolute(pathExist)) {
-    console.log('esta es la ruta: ', pathExist);
     return pathExist;
   }
-  console.log('la ruta no era absoluta: ', path.resolve(pathExist));
+
   return path.resolve(pathExist);
 };
-
-validatePath(pathExist);
-convertToAbsolutePath(pathExist);
 
 module.exports = {
   validatePath, convertToAbsolutePath,

@@ -1,3 +1,6 @@
-# Este es un ejemplo para que busque links dentro de otra carpeta (https://aula.cdichile.org/mod/quiz/view.php?id=227&forceview=1);
+# Este es un ejemplo para que busque links dentro de otra carpeta 
+[un link](https://aula.cdichile.org/mod/quiz/view.php?id=227&forceview=1);
 
 [ ] Probaremos si funciona 
+
+[juego maiquel](https://www.zona-leros.com/juegos-pc/need-for-speed-hot-pursuit)
