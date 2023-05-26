@@ -1,11 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-// eslint-disable-next-line no-unused-vars
-const pathExist = process.argv[2];
-// eslint-disable-next-line no-unused-vars
-const allPath = path.join(__dirname, './');
-
 // eslint-disable-next-line no-shadow
 const readDirectory = (pathExist) => {
   const allMd = [];

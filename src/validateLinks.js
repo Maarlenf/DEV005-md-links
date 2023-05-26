@@ -4,9 +4,8 @@ const validateLinksAll = (arrayMd) => arrayMd.map((link) => fetch(link.href)
     text: link.text,
     file: link.file,
     status: response.status,
-    ok: response.status >= 200 && response.status < 300 ? 'ok' : 'fail',
-  }))
-  .catch((!arrayMd)));
+    message: response.status >= 200 && response.status < 300 ? 'ok' : 'fail',
+  })));
 // return Promise.all(...arrayPromises);
 
 module.exports = { validateLinksAll };

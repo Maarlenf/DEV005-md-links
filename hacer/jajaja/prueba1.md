@@ -4,3 +4,7 @@
 [ ] Probaremos si funciona 
 
 [juego maiquel](https://www.zona-leros.com/juegos-pc/need-for-speed-hot-pursuit)
+
+[holaaa](https://www.zona-leros.com/juegos-pc/need-for-speed-hot-pursuit)
+
+[otro roto](https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Functions)
