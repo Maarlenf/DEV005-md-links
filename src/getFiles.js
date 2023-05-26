@@ -5,20 +5,24 @@ const path = require('path');
 const readDirectory = (pathExist) => {
   const allMd = [];
   let subDirectories = [];
-  const allDirectory = fs.readdirSync(pathExist);
-  allDirectory.forEach((file) => {
-    if (file !== 'node_modules' && file !== '.git') {
-      const newFile = path.resolve(pathExist, file);
-      if (path.extname(newFile) === '.md') {
-        allMd.push(newFile);
-      } else if (fs.statSync(newFile).isDirectory()) {
-        subDirectories = readDirectory(newFile);
-        if (subDirectories.length > 0) {
-          allMd.push(...subDirectories);
+  if (fs.statSync(pathExist).isFile() && path.extname(pathExist) === '.md') {
+    allMd.push(pathExist);
+  } else {
+    const allDirectory = fs.readdirSync(pathExist);
+    allDirectory.forEach((file) => {
+      if (file !== 'node_modules' && file !== '.git') {
+        const newFile = path.resolve(pathExist, file);
+        if (path.extname(newFile) === '.md') {
+          allMd.push(newFile);
+        } else if (fs.statSync(newFile).isDirectory()) {
+          subDirectories = readDirectory(newFile);
+          if (subDirectories.length > 0) {
+            allMd.push(...subDirectories);
+          }
         }
       }
-    }
-  });
+    });
+  }
   return allMd;
 };
 

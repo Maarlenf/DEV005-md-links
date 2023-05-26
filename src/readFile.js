@@ -25,7 +25,8 @@ const getLinks = (content, file) => {
 const getContent = (pathMD) => new Promise((resolve, reject) => {
   fs.readFile(pathMD, 'utf8', (err, data) => {
     if (err) {
-      reject(err);
+      // eslint-disable-next-line prefer-promise-reject-errors
+      reject('there fail:', err);
     }
     const watch = getLinks(data, pathMD);
     resolve(watch);
@@ -39,5 +40,5 @@ const readAllFilesMd = (arrayMd) => {
 };
 
 module.exports = {
-  readAllFilesMd,
+  readAllFilesMd, getLinks, getContent,
 };
