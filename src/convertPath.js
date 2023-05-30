@@ -1,4 +1,4 @@
-// import { marked } from 'marked';
+/* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
 
@@ -6,7 +6,6 @@ const validatePath = (pathExist) => {
   if (fs.existsSync(pathExist)) {
     return true;
   }
-  // eslint-disable-next-line no-console
   return console.log(`La ruta ingresada no existe: ${pathExist}`);
 };
 

@@ -1,12 +1,12 @@
+/* eslint-disable new-cap */
+/* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable import/no-extraneous-dependencies */
 const fs = require('fs');
 const markdownIt = require('markdown-it');
 const { JSDOM } = require('jsdom');
 
-// función para traer links
 const getLinks = (content, file) => {
   const allLinks = [];
-  // eslint-disable-next-line new-cap
   const md = new markdownIt();
   const convertHTML = md.render(content);
   const dom = new JSDOM(convertHTML);
@@ -25,8 +25,7 @@ const getLinks = (content, file) => {
 const getContent = (pathMD) => new Promise((resolve, reject) => {
   fs.readFile(pathMD, 'utf8', (err, data) => {
     if (err) {
-      // eslint-disable-next-line prefer-promise-reject-errors
-      reject('there fail:', err);
+      reject('there fail:', err.message);
     }
     const watch = getLinks(data, pathMD);
     resolve(watch);
@@ -34,7 +33,6 @@ const getContent = (pathMD) => new Promise((resolve, reject) => {
 });
 
 const readAllFilesMd = (arrayMd) => {
-  // console.log(getFileMd);
   const arrayPromises = arrayMd.map((element) => getContent(element));
   return Promise.all(arrayPromises);
 };

@@ -10,7 +10,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "start": "node index.js"
   },
   "repository": {
@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/Maarlenf/DEV005-md-links/issues"
   },
-  "bin":{
+  "bin": {
     "mdLinks": "src/cli.js"
   },
   "homepage": "https://github.com/Maarlenf/DEV005-md-links#readme",
@@ -37,8 +37,7 @@
   },
   "dependencies": {
     "@laboratoria/curriculum-parser": "github:Laboratoria/course-parser",
-    "axios": "^1.4.0",
     "markdown-it": "^13.0.1",
-    "marked": "^5.0.2"
+    "node-fetch": "^2.6.11"
   }
 }

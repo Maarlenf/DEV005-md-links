@@ -1,6 +1,3 @@
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-shadow */
-/* eslint-disable no-undef */
 const path = require('path');
 const { readFile } = require('fs');
 const { validatePath, convertToAbsolutePath } = require('../src/convertPath');
@@ -12,8 +9,34 @@ const {
   pathExist, pathProbe, exampleGetLink, convertToGetLink,
   exampleMDfiles, mockValidateLinks, mockGetContent,
 } = require('./mockData');
+const { beforeEach, afterEach } = require('node:test');
+const fetch = require('node-fetch');
+const { error } = require('console');
+jest.mock('node-fetch', () => {
+  const otherProbe = [
+    {
+      href: 'https://aula.cdichile.org/mod/quiz/view.php?id=227&forceview=1',
+      text: 'un link',
+      file: 'C:\\Users\\Marle\\OneDrive\\Escritorio\\md-links\\DEV005-md-links\\hacer\\jajaja\\prueba1.md',
+    },
+    {
+      href: 'https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Functions',
+      text: 'otro roto',
+      file: 'C:\\Users\\Marle\\OneDrive\\Escritorio\\md-links\\DEV005-md-links\\hacer\\jajaja\\prueba1.md',
+    }
+  ];
+  return jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
+    const result = otherProbe.map((link) => ({
+      href: link.href,
+      text: link.text,
+      file: link.file,
+      status: 200,
+      message: 'ok',
+    }))
+    resolve(result);
+  }));
+  })
 
-global.fetch = jest.fn;
 
 describe('validatePath', () => {
   it('It is a function', () => {
@@ -66,17 +89,6 @@ describe('getFiles', () => {
   });
 });
 
-describe('validateLinks', () => {
-  it('should return array with status and message', () => {
-    jest.spyOn(global, 'fetch').mockImplementation(() => new Promise((resolve, reject) => {
-      resolve(mockValidateLinks);
-      expect(validateLinksAll(exampleGetLink)).resolve.toEqual(mockValidateLinks);
-      reject(error);
-      expect(validateLinksAll('')).toMatch(error);
-    }));
-  });
-});
-
 describe('mdLinks', () => {
   it('It is should be function', () => {
     expect(typeof mdLinks).toBe('function');
@@ -93,6 +105,14 @@ describe('mdLinks', () => {
       .then((res) => {
         // const array = res.flat;
         expect(res.flat()).toEqual(exampleGetLink);
-      });
+      })
   });
+ it('call readAllFilesMd --validate', async () => {
+    const probe = readDirectory('C:\\Users\\Marle\\OneDrive\\Escritorio\\md-links\\DEV005-md-links\\hacer\\jajaja');
+    await readAllFilesMd(probe)
+      .then((res) => {
+        const arrayLinks = res.flat();
+        return expect(validateLinksAll(arrayLinks)).toEqual(Promise.all(mockValidateLinks));
+      });
+});
 });
