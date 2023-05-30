@@ -1,5 +1,9 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 const path = require('path');
 const { readFile } = require('fs');
+const fetch = require('node-fetch');
 const { validatePath, convertToAbsolutePath } = require('../src/convertPath');
 const { mdLinks } = require('../src/index');
 const { readDirectory } = require('../src/getFiles');
@@ -9,9 +13,7 @@ const {
   pathExist, pathProbe, exampleGetLink, convertToGetLink,
   exampleMDfiles, mockValidateLinks, mockGetContent,
 } = require('./mockData');
-const { beforeEach, afterEach } = require('node:test');
-const fetch = require('node-fetch');
-const { error } = require('console');
+
 jest.mock('node-fetch', () => {
   const otherProbe = [
     {
@@ -23,7 +25,7 @@ jest.mock('node-fetch', () => {
       href: 'https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Functions',
       text: 'otro roto',
       file: 'C:\\Users\\Marle\\OneDrive\\Escritorio\\md-links\\DEV005-md-links\\hacer\\jajaja\\prueba1.md',
-    }
+    },
   ];
   return jest.fn().mockImplementation(() => new Promise((resolve, reject) => {
     const result = otherProbe.map((link) => ({
@@ -32,11 +34,10 @@ jest.mock('node-fetch', () => {
       file: link.file,
       status: 200,
       message: 'ok',
-    }))
+    }));
     resolve(result);
   }));
-  })
-
+});
 
 describe('validatePath', () => {
   it('It is a function', () => {
@@ -105,14 +106,14 @@ describe('mdLinks', () => {
       .then((res) => {
         // const array = res.flat;
         expect(res.flat()).toEqual(exampleGetLink);
-      })
+      });
   });
- it('call readAllFilesMd --validate', async () => {
+  it('call readAllFilesMd --validate', async () => {
     const probe = readDirectory('C:\\Users\\Marle\\OneDrive\\Escritorio\\md-links\\DEV005-md-links\\hacer\\jajaja');
     await readAllFilesMd(probe)
       .then((res) => {
         const arrayLinks = res.flat();
         return expect(validateLinksAll(arrayLinks)).toEqual(Promise.all(mockValidateLinks));
       });
-});
+  });
 });

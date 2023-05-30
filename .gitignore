@@ -3,3 +3,7 @@
 .nyc_output/
 coverage/
 node_modules/
+probar/
+hacer/
+src/
+test/

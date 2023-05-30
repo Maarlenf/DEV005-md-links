@@ -38,6 +38,7 @@
   "dependencies": {
     "@laboratoria/curriculum-parser": "github:Laboratoria/course-parser",
     "markdown-it": "^13.0.1",
+    "md-links": "github:Maarlenf/DEV005-md-links",
     "node-fetch": "^2.6.11"
   }
 }
